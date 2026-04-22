@@ -1,20 +1,33 @@
 import { useGSAP } from "@gsap/react"
 import gsap from "gsap"
 import { SplitText } from "gsap/all"
+import { useRef } from "react"
+import { useMediaQuery } from "react-responsive"
 
 const Hero = () => {
+    const videoRef = useRef()
+    const isMobile = useMediaQuery({maxWidth: '768px'})
     useGSAP(() => {
-        const heroSplit = new SplitText('.title', {type: 'chars, words'})
         const paragraphSplit = new SplitText('.subtitle', {type: 'lines'})
+        const heroSplit = new SplitText('.title', {type: 'chars, words'})
+        heroSplit.chars.forEach((chars) => chars.classList.add('text-gradient'))
 
-        heroSplit.chars.forEach((char) => char.classList.add('text-gradient'))
+        gsap.from(heroSplit.chars, {yPercent: 100, ease: 'back.inOut', stagger: 0.02, opacity:0, duration:1.2})
+        gsap.from(paragraphSplit.lines, {yPercent: 100, delay: 1.2, opacity:0, stagger: 0.06})
 
-        gsap.from(heroSplit.chars, {yPercent: 100, duration: 1.8, stagger: 0.05, ease: 'expo.out'})
-        gsap.from(paragraphSplit.lines, {yPercent: 100, duration: 1.8, stagger: 0.06, ease: 'expo.out', delay: 1, opacity: 0})
+        gsap.timeline({scrollTrigger:{trigger: '#hero', start:'top top', end: 'bottom top', scrub:true}})
+        .to('.right-leaf', {rotation: 15, y: 50, x: 50, ease: 'none'}, 0)
+        .to('.left-leaf', {rotation: 15, y: 50, x: -50, ease: 'none'}, 0)
 
-        gsap.timeline({scrollTrigger:{trigger: '#hero', start: 'top top', end: 'bottom top', scrub: true}})
-        .to('.left-leaf', {rotation: -15, x: -50, y: 50, ease: 'none'}, 0)
-        .to('.right-leaf', {rotation: 15, x: 50, y: 50, ease: 'none'}, 0)
+        const startValue = isMobile ? 'top 50%' : 'center 60%'
+        const endValue = isMobile ? '120% top' : 'bottom top'
+
+        const tl = gsap.timeline({
+            scrollTrigger:{trigger: 'video', start: startValue, end: endValue, scrub: true, pin: true}
+        })
+        videoRef.current.onloadedmetadata = () => {
+            tl.to(videoRef.current, {currentTime: videoRef.current.duration})
+        }
     }, [])
   return (
     <>
@@ -40,6 +53,10 @@ const Hero = () => {
                 </div>
             </div>
         </section>
+
+        <div className="video absolute inset-0">
+            <video src ="/videos/output.mp4" muted playsInline preload="auto" ref={videoRef}/>
+        </div>
     </>
   )
 }
