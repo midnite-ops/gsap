@@ -6,8 +6,8 @@ import gsap from "gsap"
 
 export const Navbar = () => {
     useGSAP(() => {
-        const tl = gsap.timeline({scrollTrigger: {trigger: '.nav', start: 'bottom top'}})
-        tl.fromTo('.nav', {backgroundColor: 'transparent'}, {backgroundColor: '#00000050', backgroundFilter: 'blur(10px)', duration: 1})
+        const tl = gsap.timeline({scrollTrigger: {trigger: '.nav', start: 'bottom top', end: 'top top'}})
+        tl.fromTo('.nav', { backgroundColor: 'transparent'}, {backgroundColor: '#00000050', backgroundFilter: 'blur(10px)', duration: 1})
     })
     
   return (
