@@ -3,6 +3,7 @@ import gsap from "gsap"
 import { Navbar } from "../components/Navbar"
 import { useGSAP } from "@gsap/react"
 import Hero from "../components/Hero"
+import Cocktails from "../components/Cocktails"
 
 gsap.registerPlugin(ScrollTrigger, SplitText)
 
@@ -18,19 +19,7 @@ const App = () => {
     <main>
       <Navbar />
       <Hero />
-      {/* <div className="mt-36 flex flex-col gap-40 h-screen">
-        <div id="green-box" className="w-32 h-32 bg-green-500  rounded-xs"></div>
-        <div id="red-box" className="w-32 h-32 bg-red-500 rounded-xs"></div>
-        <div id="white-box" className="w-32 h-32 bg-white rounded-xs"></div>
-      </div>
-
-      <div id='box' className="flex justify-around items-center">
-        <div id="stagger-box" className="w-32 h-32 bg-white rounded-xs"></div>
-        <div id="stagger-box" className="w-32 h-32 bg-white rounded-xs"></div>
-        <div id="stagger-box" className="w-32 h-32 bg-white rounded-xs"></div>
-        <div id="stagger-box" className="w-32 h-32 bg-white rounded-xs"></div>
-        <div id="stagger-box" className="w-32 h-32 bg-white rounded-xs"></div>
-      </div> */}
+      <Cocktails />
       
     </main>
   )
